@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MainRecyclerViewAdapter(val musicsList :ArrayList<Music>) :
+class MainRecyclerViewAdapter(val musicsList :ArrayList<Music>, val itemClickListener: ItemClickListener) :
     RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder>(){
 
 
@@ -25,11 +25,23 @@ class MainRecyclerViewAdapter(val musicsList :ArrayList<Music>) :
             titleTextView.text = music.title
             imageView.setImageResource(music.image)
         }
+
+        holder.view.setOnClickListener {
+            itemClickListener.onClick(music)
+
+        }
+
     }
 
     override fun getItemCount(): Int = musicsList.size
 
-    class ViewHolder(private val view : View) :RecyclerView.ViewHolder(view){
+    class ItemClickListener(val callBack: (music: Music) -> Unit) {
+        fun onClick(music: Music) = callBack(music)
+
+
+    }
+
+    class ViewHolder(val view : View): RecyclerView.ViewHolder(view){
         val imageView = view.findViewById<ImageView>(R.id.image_music)
         val titleTextView = view.findViewById<TextView>(R.id.tv_title_music)
         val albumTextView = view.findViewById<TextView>(R.id.tv_album_music)
