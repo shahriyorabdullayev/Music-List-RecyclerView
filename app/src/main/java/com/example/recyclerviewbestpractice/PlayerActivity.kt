@@ -49,6 +49,7 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        mediaPlayer.stop()
 
     }
 
